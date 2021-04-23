@@ -3,7 +3,8 @@ name: 'Infra-CMS'
 on:
   push:
     branches:
-    - main
+    # - main
+    - dev
 
 jobs:
   terraform:
@@ -12,7 +13,7 @@ jobs:
     environment: production
     env:	
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRETE_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ID }}
       AWS_REGION: 'us-east-1'
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
