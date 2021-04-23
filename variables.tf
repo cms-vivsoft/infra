@@ -5,7 +5,7 @@ variable "vpc_id" {}
 variable "key_name" {}
 variable "release_label" {}
 variable "applications" {
-  type = "list"
+  type = any
 }
 variable "master_instance_type" {}
 variable "master_ebs_size" {}
