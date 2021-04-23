@@ -6,7 +6,7 @@ vpc_id              = "vpc-05931678"
 key_name            = "vcms"
 ingress_cidr_blocks = "0.0.0.0/0"
 release_label       = "emr-5.16.0"
-applications        = flatten(["Spark", "JupyterHub", "Hadoop", ])
+applications        = ["Spark", "JupyterHub", "Hadoop"]
 
 # Master node configurations
 master_instance_type = "m5.xlarge"
