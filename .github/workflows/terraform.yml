@@ -3,50 +3,34 @@ name: 'Infra-CMS'
 on:
   push:
     branches:
-    - main
-
+    - test
+    
 jobs:
-  terraform:
-    name: 'Terraform'
+  okd-k8s:
+    name: OpenShift Cluster
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
     env:	
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ID }}
       AWS_REGION: 'us-east-1'
+      
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-
+    
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      id: init
-      run: terraform init
-
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -recursive -diff -check
-
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      id: plan
-      if: github.event_name == 'push'
-      run: terraform plan -no-color
-      continue-on-error: true
-
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v1
+        
+      - name: Setup OpenShift
+        uses: manusa/actions-setup-openshift@v1.1.2
+        with:
+          oc version: 'v3.11.0'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Cluster Status
+        run: oc cluster status  
