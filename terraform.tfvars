@@ -4,7 +4,7 @@ region              = "us-east-1"
 subnet_id           = "subnet-1596fc4a"
 vpc_id              = "vpc-05931678"
 key_name            = "vcms"
-ingress_cidr_blocks = "0.0.0.0/0"
+ingress_cidr_blocks = "24.170.5.165/32"
 release_label       = "emr-5.16.0"
 applications        = ["Spark", "JupyterHub", "Hadoop"]
 
