@@ -6,7 +6,7 @@ terraform {
   backend "s3" {
     bucket = "cms-tf-state"
     key = "emr/terraform.tfstate"
-    region = var.region
+    region = "us-east-1"
   }
 }
 
