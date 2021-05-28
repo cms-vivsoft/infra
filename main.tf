@@ -2,6 +2,14 @@ provider "aws" {
   region = var.region
 }
 
+terraform {
+  backend "s3" {
+    bucket = "cms-tf-state"
+    key = "emr/terraform.tfstate"
+    region = var.region
+  }
+}
+
 module "iam" {
   source = "./modules/iam"
 }
