@@ -10,6 +10,12 @@ terraform {
   }
 }
 
+bootstrap_action {
+  path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
+  name = "init"
+  args = ["instance.isMaster=true", "echo running on master node"]
+}
+
 module "iam" {
   source = "./modules/iam"
 }
