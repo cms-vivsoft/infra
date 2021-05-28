@@ -25,6 +25,12 @@ EOF
 
   ebs_root_volume_size = "12"
 
+bootstrap_action {
+  path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
+  name = "init"
+  args = ["instance.isMaster=true", "echo running on master node"]
+}
+
   master_instance_group {
     name           = "EMR master"
     instance_type  = var.master_instance_type
