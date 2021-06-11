@@ -2,23 +2,12 @@ resource "aws_emr_cluster" "cluster" {
   name          = var.name
   release_label = var.release_label
   applications  = var.applications
-  user_data     = <<EOF
-  #!/bin/bash
-  set -e
 
-  sudo pip install mlflow
-  sudo pip install pandas
-  sudo pip install keras
-  sudo pip install tensorflow
-  sudo docker exec jupyterhub useradd -m -s /bin/bash -N admin
-  sudo docker exec jupyterhub bash -c "echo admin:admin1337! | chpasswd"
-  EOF
-
-  # bootstrap_action {
-  #   path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
-  #   name = "init"
-  #   args = ["instance.isMaster=true", "echo running on master node"]
-  # }
+  bootstrap_action {
+    path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
+    name = "init"
+    args = ["instance.isMaster=true", "echo running on master node"]
+  }
 
   additional_info = <<EOF
 {
