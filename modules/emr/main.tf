@@ -3,6 +3,12 @@ resource "aws_emr_cluster" "cluster" {
   release_label = var.release_label
   applications  = var.applications
 
+  bootstrap_action {
+    path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
+    name = "init"
+    args = ["instance.isMaster=true", "echo running on master node"]
+  }
+
   additional_info = <<EOF
 {
   "instanceAwsClientConfiguration": {
@@ -24,12 +30,6 @@ EOF
   }
 
   ebs_root_volume_size = "12"
-
-  bootstrap_action {
-    path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
-    name = "init"
-    args = ["instance.isMaster=true", "echo running on master node"]
-  }
 
   master_instance_group {
     name           = "EMR master"
