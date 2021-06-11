@@ -5,7 +5,8 @@ resource "aws_emr_cluster" "cluster" {
 
   bootstrap_action {
     # path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
-    path = "file://${path.module}/init.sh"
+    # path = "file://${path.module}/init.sh"
+    path = "file:///home/runner/work/infra/infra/init.sh"
     name = "init"
     args = ["instance.isMaster=true", "echo running on master node"]
   }
