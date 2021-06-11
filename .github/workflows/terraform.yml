@@ -47,6 +47,10 @@ jobs:
       run: terraform plan -no-color
       continue-on-error: true
 
+    - name: BootStrap Action 
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: aws s3 cp ${{ secrets.BOOTSTRAP_ACTION }} .
+
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
