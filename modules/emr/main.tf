@@ -3,13 +3,13 @@ resource "aws_emr_cluster" "cluster" {
   release_label = var.release_label
   applications  = var.applications
 
-  # bootstrap_action {
-  #   # path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
-  #   # path = "file://${path.module}/init.sh"
-  #   path = "file:/home/runner/work/infra/infra/init.sh"
-  #   name = "init"
-  #   args = ["instance.isMaster=true", "echo running on master node"]
-  # }
+  bootstrap_action {
+    # path = "s3://cms-elasticmapreduce/bootstrap-actions/init.sh"
+    # path = "file://${path.module}/init.sh"
+    path = "file:/home/runner/work/infra/infra/init.sh"
+    name = "init"
+    args = ["instance.isMaster=true", "echo running on master node"]
+  }
 
   additional_info = <<EOF
 {
