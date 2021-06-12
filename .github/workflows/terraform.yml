@@ -51,10 +51,10 @@ jobs:
     #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     #   run: aws s3 cp ${{ secrets.BOOTSTRAP_ACTION }} .
 
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
-        
-    # - name: Terraform Destroy
+    # - name: Terraform Apply
     #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    #   run: terraform apply -destroy -auto-approve
+    #   run: terraform apply -auto-approve
+        
+    - name: Terraform Destroy
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -destroy -auto-approve
